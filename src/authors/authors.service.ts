@@ -1,11 +1,64 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
+import { PrismaService } from 'src/prisma.service';
+import NormalizedResponse from 'src/utils/normalized-response';
 
 @Injectable()
 export class AuthorsService {
-  create(createAuthorDto: CreateAuthorDto) {
-    return 'This action adds a new author';
+  constructor(private prisma: PrismaService) {}
+
+  public async getByUUID(uuid: string) {
+    const gettedUser = new NormalizedResponse(
+      `Author ${uuid} has been found`,
+      await this.prisma.authors.findUnique({
+        where: {
+          author_UUID: uuid,
+        },
+      }),
+    );
+    return gettedUser.toJSON();
+  }
+
+  public async create(createAuthorDto: CreateAuthorDto) {
+    const createdAuthor = new NormalizedResponse(
+      `Author ${createAuthorDto.author_UUID} has been created`,
+      await this.prisma.authors.create({
+        data: {
+          author_UUID: createAuthorDto.author_UUID,
+          humanInformation_UUID: createAuthorDto.humanInformation_UUID,
+        },
+      }),
+    );
+    return createdAuthor.toJSON();
+  }
+
+  public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
+    return new NormalizedResponse(
+      `Author ${updateAuthorDto.author_UUID} has been updated`,
+      await this.prisma.authors.update({
+        where: {
+          author_UUID: uuid,
+        },
+        data: {
+          author_UUID: updateAuthorDto.author_UUID,
+          humanInformation_UUID: updateAuthorDto.humanInformation_UUID,
+        },
+      }),
+    ).toJSON();
+  }
+
+  public async deleteByUUID(uuid: string) {
+    const deletedUser = new NormalizedResponse(
+      `User ${uuid} has been deleted`,
+      await this.prisma.authors.delete({
+        where: {
+          author_UUID: uuid,
+        },
+      }),
+    );
+    return deletedUser.toJSON();
   }
 
   findAll() {
@@ -14,13 +67,5 @@ export class AuthorsService {
 
   findOne(id: number) {
     return `This action returns a #${id} author`;
-  }
-
-  update(id: number, updateAuthorDto: UpdateAuthorDto) {
-    return `This action updates a #${id} author`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} author`;
   }
 }

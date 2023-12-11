@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AuthorsService } from './authors.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -17,18 +25,21 @@ export class AuthorsController {
     return this.authorsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authorsService.findOne(+id);
+  @Get(':uuid')
+  public getByUUID(@Param('uuid') uuid: string) {
+    return this.authorsService.getByUUID(uuid);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
-    return this.authorsService.update(+id, updateAuthorDto);
+  @Patch(':uuid')
+  updateByUUIDs(
+    @Param('uuid') uuid: string,
+    @Body() updateAuthorDto: UpdateAuthorDto,
+  ) {
+    return this.authorsService.updateByUUID(uuid, updateAuthorDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authorsService.remove(+id);
+  @Delete(':uuid')
+  public deleteByUUID(@Param('uuid') uuid: string) {
+    return this.authorsService.deleteByUUID(uuid);
   }
 }
