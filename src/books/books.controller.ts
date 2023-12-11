@@ -17,18 +17,22 @@ export class BooksController {
     return this.booksService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.booksService.findOne(+id);
+  @Get(':uuid')
+  public getByUUID(@Param('uuid') uuid: string) {
+    return this.booksService.getByUUID(uuid);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.booksService.update(+id, updateBookDto);
+
+  @Patch(':uuid')
+  public updateByUUID(
+    @Param('uuid') uuid: string,
+    @Body() updateBookDto: UpdateBookDto,
+  ) {
+    return this.booksService.updateByUUID(uuid, updateBookDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.booksService.remove(+id);
+  @Delete(':uuid')
+  public deleteByUUID(@Param('uuid') uuid: string) {
+    return this.booksService.deleteByUUID(uuid);
   }
 }
