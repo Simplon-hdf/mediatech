@@ -24,5 +24,4 @@ function initSwagger(app: INestApplication) {
     ),
   );
 }
-
 bootstrap();
