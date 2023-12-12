@@ -3,12 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBorrowDto {
   @ApiProperty({
-    description: 'This field represents the borrow_UUID',
-  })
-  @IsString()
-  public borrow_UUID: string;
-
-  @ApiProperty({
     description: 'This field represents the status',
   })
   @IsString()
@@ -17,7 +11,7 @@ export class CreateBorrowDto {
   @ApiProperty({
     description: 'This field represents the end_at',
   })
-  @IsString()
+  @IsDateString()
   public end_at: string;
 
   @ApiProperty({

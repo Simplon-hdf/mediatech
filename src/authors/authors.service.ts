@@ -22,7 +22,7 @@ export class AuthorsService {
 
   public async create(createAuthorDto: CreateAuthorDto) {
     const createdAuthor = new NormalizedResponse(
-      `Author ${createAuthorDto} has been created`,
+      `Author ${createAuthorDto.humanInformation_UUID} has been created`,
       await this.prisma.authors.create({
         data: {
           humanInformation_UUID: createAuthorDto.humanInformation_UUID,
