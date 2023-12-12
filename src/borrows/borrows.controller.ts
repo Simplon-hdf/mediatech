@@ -4,12 +4,17 @@ import { CreateBorrowDto } from './dto/create-borrow.dto';
 import { UpdateBorrowDto } from './dto/update-borrow.dto'; // Correction du nom du DTO
 
 @Controller('borrows')
-export class UsersController {
+export class BorrowsController {
   constructor(private readonly borrowsService: BorrowsService) {} // Correction du nom du service
 
   @Post()
   public create(@Body() createBorrowDto: CreateBorrowDto) {
     return this.borrowsService.create(createBorrowDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.borrowsService.findAll();
   }
 
   @Get(':uuid')
@@ -20,7 +25,7 @@ export class UsersController {
   @Patch(':uuid')
   public updateByUUID(
     @Param('uuid') uuid: string,
-    @Body() updateBorrowDto: UpdateBorrowDto, // Correction du nom du DTO
+    @Body() updateBorrowDto: UpdateBorrowDto,
   ) {
     return this.borrowsService.updateByUUID(uuid, updateBorrowDto);
   }

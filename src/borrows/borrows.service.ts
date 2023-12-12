@@ -19,15 +19,19 @@ export class BorrowsService {
   }
 
   public async create(createBorrowDto: CreateBorrowDto) {
-    const createdBorrow = await this.prisma.borrows.create({
-      data: {
-        end_at: createBorrowDto.end_at,
-        employee_UUID: createBorrowDto.employee_UUID,
-        borrower_UUID: createBorrowDto.borrower_UUID,
-      },
-    });
-
-    return new NormalizedResponse(`Borrow with UUID ${createdBorrow.borrow_UUID} created`, createdBorrow).toJSON();
+    const createdBorrow = new NormalizedResponse(
+      `Author ${createBorrowDto.borrow_UUID} has been created`,
+      await this.prisma.borrows.create({
+        data: {
+          borrow_UUID: createBorrowDto.borrow_UUID,
+          status: createBorrowDto.status,
+          end_at: createBorrowDto.end_at,
+          employee_UUID: createBorrowDto.employee_UUID,
+          borrower_UUID: createBorrowDto.borrower_UUID,    
+        },
+      }),
+    );
+    return new NormalizedResponse('Borrow with UUID ${createdBorrow.borrow_UUID} created', createdBorrow).toJSON();
   }
 
   public async updateByUUID(uuid: string, updateBorrowDto: UpdateBorrowDto) {
@@ -36,11 +40,11 @@ export class BorrowsService {
         borrow_UUID: uuid,
       },
       data: {
+        borrow_UUID: updateBorrowDto.borrow_UUID,
+        status: updateBorrowDto.status,
         end_at: updateBorrowDto.end_at,
-        employee_UUID: updateBorrowDto.employee_UUID,
       },
     });
-
     return new NormalizedResponse(`Borrow with UUID ${uuid} updated`, updatedBorrow).toJSON();
   }
 
@@ -50,7 +54,6 @@ export class BorrowsService {
         borrow_UUID: uuid,
       },
     });
-
     return new NormalizedResponse(`Borrow with UUID ${uuid} deleted`, deletedBorrow).toJSON();
   }
 
