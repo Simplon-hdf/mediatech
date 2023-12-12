@@ -5,9 +5,10 @@ import { AuthorsModule } from './authors/authors.module';
 import { BorrowersModule } from './borrowers/borrowers.module';
 import { EmployeesModule } from './employees/employees.module';
 import { BooksModule } from './books/books.module';
+import { BorrowsModule } from './borrows/borrows.module';
 
 @Module({
-  imports: [AuthorsModule, BorrowersModule, EmployeesModule, BooksModule],
+  imports: [AuthorsModule, BorrowersModule, EmployeesModule, BooksModule, BorrowsModule],
   controllers: [AppController],
   providers: [AppService],
 })

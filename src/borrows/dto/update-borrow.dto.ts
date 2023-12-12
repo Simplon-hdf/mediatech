@@ -5,11 +5,11 @@ import { IsOptional } from 'class-validator';
 
 export class UpdateBorrowDto extends PartialType(CreateBorrowDto) {
   @IsOptional()
-  public borrow_UUID  ?: string;
+  public borrow_UUID: string;
 
   @IsOptional()
-  public end_at?: Date;
+  public status: string;
 
   @IsOptional()
-  public employee_UUID?: string;
+  public end_at: string;
 }
