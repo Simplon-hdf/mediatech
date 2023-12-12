@@ -31,7 +31,7 @@ export class AuthorsController {
   }
 
   @Patch(':uuid')
-  updateByUUIDs(
+  updateByUUID(
     @Param('uuid') uuid: string,
     @Body() updateAuthorDto: UpdateAuthorDto,
   ) {

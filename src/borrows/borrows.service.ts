@@ -20,10 +20,9 @@ export class BorrowsService {
 
   public async create(createBorrowDto: CreateBorrowDto) {
     const createdBorrow = new NormalizedResponse(
-      `Author ${createBorrowDto.borrow_UUID} has been created`,
+      `Author ${createBorrowDto} has been created`,
       await this.prisma.borrows.create({
         data: {
-          borrow_UUID: createBorrowDto.borrow_UUID,
           status: createBorrowDto.status,
           end_at: createBorrowDto.end_at,
           employee_UUID: createBorrowDto.employee_UUID,

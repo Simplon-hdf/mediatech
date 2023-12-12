@@ -22,10 +22,9 @@ constructor(private prisma: PrismaService) {}
 
   public async create(createBorrowerDto: CreateBorrowerDto) {
     const createdBorrower = new NormalizedResponse(
-      `Author ${createBorrowerDto.borrower_UUID} has been created`,
+      `Author ${createBorrowerDto} has been created`,
       await this.prisma.borrowers.create({
         data: {
-          borrower_UUID: createBorrowerDto.borrower_UUID,
           humanInformation_UUID: createBorrowerDto.humanInformation_UUID,
         },
       }),

@@ -22,10 +22,9 @@ export class EmployeesService {
   
   public async create(createEmployeeDto: CreateEmployeeDto) {
     const createdAuthor = new NormalizedResponse(
-      `Employees ${createEmployeeDto.employee_UUID} has been created`,
+      `Employees ${createEmployeeDto} has been created`,
       await this.prisma.employees.create({
         data: {
-          employee_UUID: createEmployeeDto.employee_UUID,
           humanInformation_UUID: createEmployeeDto.humanInformation_UUID,
           mail_address: createEmployeeDto.mail_address,
           password: createEmployeeDto.password,
