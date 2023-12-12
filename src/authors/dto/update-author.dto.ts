@@ -7,6 +7,4 @@ export class UpdateAuthorDto extends PartialType(CreateAuthorDto) {
   public author_UUID: string;
   @IsOptional()
   public humanInformation_UUID: string;
-  @IsOptional()
-  public books: string;
 }

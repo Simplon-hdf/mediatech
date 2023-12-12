@@ -17,18 +17,21 @@ export class BorrowersController {
     return this.borrowersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.borrowersService.findOne(+id);
+  @Get(':uuid')
+  public getByUUID(@Param('uuid') uuid: string) {
+    return this.borrowersService.getByUUID(uuid);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBorrowerDto: UpdateBorrowerDto) {
-    return this.borrowersService.update(+id, updateBorrowerDto);
+  @Patch(':uuid')
+  updateByUUIDs(
+    @Param('uuid') uuid: string,
+    @Body() updateAuthorDto: UpdateBorrowerDto,
+  ) {
+    return this.borrowersService.updateByUUID(uuid, updateAuthorDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.borrowersService.remove(+id);
+  @Delete(':uuid')
+  public deleteByUUID(@Param('uuid') uuid: string) {
+    return this.borrowersService.deleteByUUID(uuid);
   }
 }
