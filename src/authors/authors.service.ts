@@ -34,7 +34,7 @@ export class AuthorsService {
         },
     });
 
-    return new NormalizedResponse(`Author ${createdAuthor} has been created`,createdAuthor).toJSON();
+    return new NormalizedResponse(`Author ${createdAuthor} has been created`, createdAuthor).toJSON();
  }
 
 public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
@@ -52,7 +52,7 @@ public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
       },
   });
 
-  return new NormalizedResponse(`Author ${author} has been updated`,author).toJSON();
+  return new NormalizedResponse(`Author ${author} has been updated`, author).toJSON();
 }
 
 

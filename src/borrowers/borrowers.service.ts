@@ -32,7 +32,7 @@ constructor(private prisma: PrismaService) {}
         },
     });
 
-    return new NormalizedResponse(`Borrower ${createdBorrower} has been created`,createdBorrower).toJSON();
+    return new NormalizedResponse(`Borrower ${createdBorrower} has been created`, createdBorrower).toJSON();
  }
 
   public async updateByUUID(uuid: string, updateBorrowerDto: UpdateBorrowerDto) {
@@ -50,7 +50,7 @@ constructor(private prisma: PrismaService) {}
         },
     });
   
-    return new NormalizedResponse(`Borrower ${borrower} has been updated`,borrower).toJSON();
+    return new NormalizedResponse(`Borrower ${borrower} has been updated`, borrower).toJSON();
   }
 
   public async deleteByUUID(uuid: string) {
