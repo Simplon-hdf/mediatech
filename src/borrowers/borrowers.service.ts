@@ -21,30 +21,36 @@ constructor(private prisma: PrismaService) {}
   }
 
   public async create(createBorrowerDto: CreateBorrowerDto) {
-    const createdBorrower = new NormalizedResponse(
-      `Author ${createBorrowerDto} has been created`,
-      await this.prisma.borrowers.create({
+    const createdBorrower = await this.prisma.borrowers.create({
         data: {
-          humanInformation_UUID: createBorrowerDto.humanInformation_UUID,
+            humanInformation: {
+                create: {
+                    first_name: createBorrowerDto.first_name,
+                    last_name: createBorrowerDto.last_name,
+                },
+            },
         },
-      }),
-    );
-    return createdBorrower.toJSON();
-  }
+    });
+
+    return new NormalizedResponse(`Borrower ${createdBorrower} has been created`,createdBorrower).toJSON();
+ }
 
   public async updateByUUID(uuid: string, updateBorrowerDto: UpdateBorrowerDto) {
-    return new NormalizedResponse(
-      `Author ${updateBorrowerDto.borrower_UUID} has been updated`,
-      await this.prisma.borrowers.update({
+    const borrower = await this.prisma.borrowers.update({
+        data: {
+          humanInformation: {
+                update: {
+                    first_name: updateBorrowerDto.first_name,
+                    last_name: updateBorrowerDto.last_name,
+                },
+            },
+        },
         where: {
           borrower_UUID: uuid,
         },
-        data: {
-          borrower_UUID: updateBorrowerDto.borrower_UUID,
-          humanInformation_UUID: updateBorrowerDto.humanInformation_UUID,
-        },
-      }),
-    ).toJSON();
+    });
+  
+    return new NormalizedResponse(`Borrower ${borrower} has been updated`,borrower).toJSON();
   }
 
   public async deleteByUUID(uuid: string) {

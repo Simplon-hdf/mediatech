@@ -3,6 +3,8 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { PrismaService } from 'src/prisma.service';
 import NormalizedResponse from 'src/utils/normalized-response';
+import { CreateHumanInformationDto } from 'src/human-informations/dto/create-human-information.dto';
+import { HumanInformation } from 'src/human-informations/entities/human-information.entity';
 
 @Injectable()
 export class AuthorsService {
@@ -21,31 +23,38 @@ export class AuthorsService {
   }
 
   public async create(createAuthorDto: CreateAuthorDto) {
-    const createdAuthor = new NormalizedResponse(
-      `Author ${createAuthorDto.humanInformation_UUID} has been created`,
-      await this.prisma.authors.create({
+    const createdAuthor = await this.prisma.authors.create({
         data: {
-          humanInformation_UUID: createAuthorDto.humanInformation_UUID,
+            humanInformation: {
+                create: {
+                    first_name: createAuthorDto.first_name,
+                    last_name: createAuthorDto.last_name,
+                },
+            },
         },
-      }),
-    );
-    return createdAuthor.toJSON();
-  }
+    });
 
-  public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
-    return new NormalizedResponse(
-      `Author ${updateAuthorDto.author_UUID} has been updated`,
-      await this.prisma.authors.update({
-        where: {
-          author_UUID: uuid,
-        },
-        data: {
-          author_UUID: updateAuthorDto.author_UUID,
-          humanInformation_UUID: updateAuthorDto.humanInformation_UUID,
-        },
-      }),
-    ).toJSON();
-  }
+    return new NormalizedResponse(`Author ${createdAuthor} has been created`,createdAuthor).toJSON();
+ }
+
+public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
+  const author = await this.prisma.authors.update({
+      data: {
+        humanInformation: {
+              update: {
+                  first_name: updateAuthorDto.first_name,
+                  last_name: updateAuthorDto.last_name,
+              },
+          },
+      },
+      where: {
+        author_UUID: uuid,
+      },
+  });
+
+  return new NormalizedResponse(`Author ${author} has been updated`,author).toJSON();
+}
+
 
   public async deleteByUUID(uuid: string) {
     const deletedUser = new NormalizedResponse(
