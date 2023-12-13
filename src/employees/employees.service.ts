@@ -19,37 +19,43 @@ export class EmployeesService {
     );
     return gettedUser.toJSON();
   }
-  
-  public async create(createEmployeeDto: CreateEmployeeDto) {
-    const createdAuthor = new NormalizedResponse(
-      `Employees ${createEmployeeDto} has been created`,
-      await this.prisma.employees.create({
-        data: {
-          humanInformation_UUID: createEmployeeDto.humanInformation_UUID,
+
+public async create(createEmployeeDto: CreateEmployeeDto) {
+  const createdEmployee = await this.prisma.employees.create({
+      data: {
+        humanInformation: {
+              create: {
+                  first_name: createEmployeeDto.first_name,
+                  last_name: createEmployeeDto.last_name,
+              },
+          },
           mail_address: createEmployeeDto.mail_address,
           password: createEmployeeDto.password,
-        },
-      }),
-    );
-    return createdAuthor.toJSON();
-  }
+      },
+  });
 
-  public async updateByUUID(uuid: string, updateEmployeeDto: UpdateEmployeeDto) {
-    return new NormalizedResponse(
-      `Employees ${updateEmployeeDto.employee_UUID} has been updated`,
-      await this.prisma.employees.update({
-        where: {
-          employee_UUID: uuid,
-        },
-        data: {
-          employee_UUID: updateEmployeeDto.employee_UUID,
-          humanInformation_UUID: updateEmployeeDto.humanInformation_UUID,
+  return new NormalizedResponse(`Employee ${createdEmployee} has been created`, createdEmployee).toJSON();
+}
+
+public async updateByUUID(uuid: string, updateEmployeeDto: UpdateEmployeeDto) {
+  const employee = await this.prisma.employees.update({
+      where: {
+        employee_UUID: uuid,
+      },
+      data: {
+        humanInformation: {
+              update: {
+                  first_name: updateEmployeeDto.first_name,
+                  last_name: updateEmployeeDto.last_name,
+              },
+          },
           mail_address: updateEmployeeDto.mail_address,
           password: updateEmployeeDto.password,
-        },
-      }),
-    ).toJSON();
-  }
+      },
+  });
+
+  return new NormalizedResponse(`Employee ${employee} has been updated`, employee).toJSON();
+}
 
   public async deleteByUUID(uuid: string) {
     const deletedUser = new NormalizedResponse(
