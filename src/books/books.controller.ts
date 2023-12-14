@@ -17,12 +17,22 @@ export class BooksController {
     return this.booksService.findAll();
   }
 
-  @Get(':uuid')
-  public getByUUID(@Param('uuid') uuid: string) {
-    return this.booksService.getByUUID(uuid);
+
+  @Get('book/:uuid')
+  public getByBookUUID(@Param('uuid') uuid: string) {
+    return this.booksService.getByBookUUID(uuid);
   }
 
+  @Get('author/:uuid')
+  public getByAuthorUUID(@Param('uuid') uuid: string) {
+    return this.booksService.getByAuthorUUID(uuid);
+  }
 
+  @Get('borrow/:uuid')
+  public getByBorrowUUID(@Param('uuid') uuid: string) {
+    return this.booksService.getByBorrowUUID(uuid);
+  }
+  
   @Patch(':uuid')
   public updateByUUID(
     @Param('uuid') uuid: string,

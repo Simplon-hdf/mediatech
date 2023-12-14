@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -8,7 +8,7 @@ import { HumanInformation } from 'src/human-informations/entities/human-informat
 
 @Injectable()
 export class AuthorsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   public async getByUUID(uuid: string) {
     const gettedUser = new NormalizedResponse(
@@ -33,8 +33,7 @@ export class AuthorsService {
             },
         },
     });
-
-    return new NormalizedResponse(`Author ${createdAuthor} has been created`, createdAuthor).toJSON();
+    return new NormalizedResponse(`Author ${createAuthorDto.first_name} has been created`, createdAuthor).toJSON();
  }
 
 public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
@@ -51,22 +50,20 @@ public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
         author_UUID: uuid,
       },
   });
-
   return new NormalizedResponse(`Author ${author} has been updated`, author).toJSON();
 }
 
-
-  public async deleteByUUID(uuid: string) {
-    const deletedUser = new NormalizedResponse(
-      `User ${uuid} has been deleted`,
-      await this.prisma.authors.delete({
-        where: {
-          author_UUID: uuid,
-        },
-      }),
-    );
-    return deletedUser.toJSON();
-  }
+public async deleteByUUID(uuid: string) {
+  const deletedUser = new NormalizedResponse(
+    `Authors ${uuid} has been deleted`,
+    await this.prisma.authors.delete({
+      where: {
+        author_UUID: uuid,
+      },
+    }),
+  );
+  return deletedUser.toJSON();
+}
 
   findAll() {
     return `This action returns all authors`;

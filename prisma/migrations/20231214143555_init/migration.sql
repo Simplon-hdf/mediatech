@@ -36,7 +36,7 @@ CREATE TABLE "Employees" (
 -- CreateTable
 CREATE TABLE "Borrows" (
     "borrow_UUID" VARCHAR(36) NOT NULL,
-    "status" VARCHAR(30) NOT NULL,
+    "status" INTEGER NOT NULL,
     "started_at" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "end_at" TIMESTAMP(3),
     "employee_UUID" TEXT NOT NULL,

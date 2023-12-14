@@ -1,18 +1,18 @@
-import { IsString, Length, IsDate, IsDateString } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBorrowDto {
   @ApiProperty({
     description: 'This field represents the status',
   })
-  @IsString()
+  @IsNumber()
   public status: number;
 
-  @ApiProperty({
+  /*@ApiProperty({
     description: 'This field represents the end_at',
   })
   @IsDateString()
-  public end_at: string;
+  public end_at: string;*/
 
   @ApiProperty({
     description: 'This field represents the employee_UUID',
@@ -27,4 +27,3 @@ export class CreateBorrowDto {
   public borrower_UUID: string;
 
 }
-
