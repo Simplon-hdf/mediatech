@@ -8,7 +8,7 @@ export class UpdateBorrowDto extends PartialType(CreateBorrowDto) {
   public borrow_UUID: string;
 
   @IsOptional()
-  public status: string;
+  public status: number;
 
   @IsOptional()
   public end_at: string;

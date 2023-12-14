@@ -6,7 +6,7 @@ export class CreateBorrowDto {
     description: 'This field represents the status',
   })
   @IsString()
-  public status: string;
+  public status: number;
 
   @ApiProperty({
     description: 'This field represents the end_at',
