@@ -68,6 +68,21 @@ public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
     return deletedUser.toJSON();
   }
 
+
+
+//   async delete(humanInformationsUUID: string) {
+//     const author = await this.prisma.humanInformations.delete({
+//         where: {
+//             UUID: humanInformationsUUID,
+//         },
+//     });
+
+//     return author;
+// }
+
+
+
+
   findAll() {
     return `This action returns all authors`;
   }
