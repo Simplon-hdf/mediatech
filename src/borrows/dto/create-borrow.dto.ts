@@ -1,11 +1,11 @@
-import { IsString, Length, IsDate, IsDateString } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBorrowDto {
   @ApiProperty({
     description: 'This field represents the status',
   })
-  @IsString()
+  @IsNumber()
   public status: number;
 
   /*@ApiProperty({

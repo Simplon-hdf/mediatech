@@ -29,8 +29,7 @@ export class BorrowsService {
           borrower_UUID: createBorrowDto.borrower_UUID,    
         },
       }),
-    );
-    return new NormalizedResponse(`Author ${createBorrowDto.employee_UUID} has been created`, createdBorrow).toJSON();
+    ).toJSON();
   }
 
   public async updateByUUID(uuid: string, updateBorrowDto: UpdateBorrowDto) {

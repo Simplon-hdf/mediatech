@@ -53,18 +53,17 @@ public async updateByUUID(uuid: string, updateAuthorDto: UpdateAuthorDto) {
   return new NormalizedResponse(`Author ${author} has been updated`, author).toJSON();
 }
 
-
-  public async deleteByUUID(uuid: string) {
-    const deletedUser = new NormalizedResponse(
-      `User ${uuid} has been deleted`,
-      await this.prisma.authors.delete({
-        where: {
-          author_UUID: uuid,
-        },
-      }),
-    );
-    return deletedUser.toJSON();
-  }
+public async deleteByUUID(uuid: string) {
+  const deletedUser = new NormalizedResponse(
+    `Authors ${uuid} has been deleted`,
+    await this.prisma.authors.delete({
+      where: {
+        author_UUID: uuid,
+      },
+    }),
+  );
+  return deletedUser.toJSON();
+}
 
   findAll() {
     return `This action returns all authors`;
