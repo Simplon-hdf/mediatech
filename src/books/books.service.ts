@@ -26,14 +26,41 @@ export class BooksService {
     return `This action returns all books`;
   }
 
-
-    public async getByUUID(uuid: string) {
+  public async getByBookUUID(uuid: string) {
     return new NormalizedResponse(
       `Book for '${uuid}' uuid has been found`,
       await this.prisma.books.findUnique({
         where: {
           book_UUID: uuid,
         },
+      }),
+    ).toJSON();
+  }
+
+  public async getByAuthorUUID(uuid: string) {
+    return new NormalizedResponse(
+      `Book for '${uuid}' uuid has been found`,
+      await this.prisma.authors.findUnique({
+        where: {
+          author_UUID: uuid,
+        },
+        include: {
+          books: true,
+        }
+      }),
+    ).toJSON();
+  }
+
+  public async getByBorrowUUID(uuid: string) {
+    return new NormalizedResponse(
+      `Book for '${uuid}' uuid has been found`,
+      await this.prisma.borrows.findUnique({
+        where: {
+          borrow_UUID: uuid,
+        },
+        include: {
+          books: true,
+        }
       }),
     ).toJSON();
   }
