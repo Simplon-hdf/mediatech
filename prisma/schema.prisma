@@ -44,7 +44,7 @@ model Employees {
 
 model Borrows {
   borrow_UUID     String    @id(map: "borrows_borrow_uuid") @unique @default(uuid()) @db.VarChar(36)
-  status          String    @db.VarChar(30)
+  status          Int
   started_at      DateTime  @default(now()) @db.Date()
   end_at          DateTime?
   employee_UUID   String       
