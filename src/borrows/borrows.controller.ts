@@ -17,9 +17,19 @@ export class BorrowsController {
     return this.borrowsService.findAll();
   }
 
-  @Get(':uuid')
-  public getByUUID(@Param('uuid') uuid: string) {
-    return this.borrowsService.getByUUID(uuid);
+  @Get('borrow/:uuid')
+  public getByBorrowUUID(@Param('uuid') uuid: string) {
+    return this.borrowsService.getByBorrowUUID(uuid);
+  }
+
+  @Get('employee/:uuid')
+  public getByEmployeeUUID(@Param('uuid') uuid: string) {
+    return this.borrowsService.getByEmployeeUUID(uuid);
+  }
+
+  @Get('borrower/:uuid')
+  public getByBorrowerUUID(@Param('uuid') uuid: string) {
+    return this.borrowsService.getByBorrowerUUID(uuid);
   }
 
   @Patch(':uuid')
