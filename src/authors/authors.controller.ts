@@ -25,7 +25,7 @@ export class AuthorsController {
     return this.authorsService.findAll();
   }
 
-  @Get(':uuid')
+  @Get('test/:uuid')
   public getByUUID(@Param('uuid') uuid: string) {
     return this.authorsService.getByUUID(uuid);
   }

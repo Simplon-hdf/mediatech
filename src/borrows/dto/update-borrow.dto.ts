@@ -11,5 +11,5 @@ export class UpdateBorrowDto extends PartialType(CreateBorrowDto) {
   public status: number;
 
   @IsOptional()
-  public end_at: string;
+  public end_at: Date;
 }
