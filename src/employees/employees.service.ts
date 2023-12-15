@@ -33,8 +33,7 @@ public async create(createEmployeeDto: CreateEmployeeDto) {
           password: createEmployeeDto.password,
       },
   });
-
-  return new NormalizedResponse(`Employee ${createdEmployee} has been created`, createdEmployee).toJSON();
+  return new NormalizedResponse(`Employee ${createEmployeeDto.first_name + " " +  createEmployeeDto.last_name} has been created`, createdEmployee).toJSON();
 }
 
 public async updateByUUID(uuid: string, updateEmployeeDto: UpdateEmployeeDto) {
@@ -54,7 +53,7 @@ public async updateByUUID(uuid: string, updateEmployeeDto: UpdateEmployeeDto) {
       },
   });
 
-  return new NormalizedResponse(`Employee ${employee} has been updated`, employee).toJSON();
+  return new NormalizedResponse(`Employee ${updateEmployeeDto.first_name + " " +  updateEmployeeDto.last_name} has been updated`, employee).toJSON();
 }
 
   public async deleteByUUID(uuid: string) {
