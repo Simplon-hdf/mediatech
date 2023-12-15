@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 
 export class CreateEmployeeDto {
   @ApiProperty({
@@ -23,7 +23,7 @@ export class CreateEmployeeDto {
     minLength: 3,
     maxLength: 80,
   })
-  @IsString()
+  @IsEmail()
   public mail_address: string;
 
   @ApiProperty({
