@@ -35,13 +35,12 @@ export class HumanInformationsService {
 
   public async updateByUUID(uuid: string, updateHumanInformationDto: UpdateHumanInformationDto) {
     return new NormalizedResponse(
-      `HumanInformation ${updateHumanInformationDto.humanInformation_UUID} has been updated`,
+      `HumanInformation ${updateHumanInformationDto.first_name + " " + updateHumanInformationDto.last_name} has been updated`,
       await this.prisma.humanInformations.update({
         where: {
           humanInformation_UUID: uuid,
         },
         data: {
-          humanInformation_UUID: updateHumanInformationDto.humanInformation_UUID,
           first_name: updateHumanInformationDto.first_name,
           last_name: updateHumanInformationDto.last_name,
         },

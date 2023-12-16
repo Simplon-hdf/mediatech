@@ -7,23 +7,36 @@ import NormalizedResponse from 'src/utils/normalized-response';
 @Injectable()
 export class BorrowsService {
   constructor(private prisma: PrismaService) {}
-  // public async getByUUID(uuid: string) {
-  //   const borrowedItem = await this.prisma.borrows.findUnique({
-  //     where: {
-  //       borrow_UUID: uuid,
-  //     },
-  //   });
-  //   return new NormalizedResponse(`Borrow with UUID ${uuid} found`, borrowedItem).toJSON();
-  // }
+  public async getByUUID(uuid: string) {
+    const borrowedItem = await this.prisma.borrows.findUnique({
+      where: {
+        borrow_UUID: uuid,
+      },
+    });
+    return new NormalizedResponse(`Borrow with UUID ${uuid} found`, borrowedItem).toJSON();
+  }
 
   public async create(createBorrowDto: CreateBorrowDto) {
+  
+    const end_At = new Date();
+    end_At.setDate(end_At.getDate() + 7);
+
+
     const createdBorrow = await this.prisma.borrows.create ({
-        data: {
-          status: createBorrowDto.status,
-          end_at: createBorrowDto.end_at,
-          employee_UUID: createBorrowDto.employee_UUID,
-          borrower_UUID: createBorrowDto.borrower_UUID,    
+      data: {
+        end_at: end_At,
+        status: 1,
+        employee: {
+          connect: {
+            employee_UUID: createBorrowDto.employee_UUID,
+          },
         },
+        borrower: {
+          connect: {
+            borrower_UUID: createBorrowDto.borrower_UUID,
+          },
+        },
+      },
       });
     return new NormalizedResponse(`Borrow ${createBorrowDto.borrower_UUID } has been created`, createdBorrow).toJSON();
   }
@@ -68,14 +81,16 @@ export class BorrowsService {
   }
 
   public async updateByUUID(uuid: string, updateBorrowDto: UpdateBorrowDto) {
+
+    const end_At = new Date();
+    end_At.setDate(end_At.getDate() + 7);
     const updatedBorrow = await this.prisma.borrows.update({
       where: {
         borrow_UUID: uuid,
       },
       data: {
-        borrow_UUID: updateBorrowDto.borrow_UUID,
-        status: updateBorrowDto.status,
-        end_at: updateBorrowDto.end_at,
+        status: 1,
+        end_at: end_At,
       },
     });
     return new NormalizedResponse(`Borrow with UUID ${updateBorrowDto.borrower_UUID} has been updated`, updatedBorrow).toJSON();
