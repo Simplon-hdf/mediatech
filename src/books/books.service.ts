@@ -8,16 +8,22 @@ import { UpdateBookDto } from './dto/update-book.dto';
 export class BooksService {
   constructor(private readonly prisma: PrismaService) {}
  
-   public async create(createBookDto: CreateBookDto) {
+  public async create(createBookDto: CreateBookDto) {
     return new NormalizedResponse(
       `Book has been registered`,
       await this.prisma.books.create({
         data: {
           name: createBookDto.name,
           description: createBookDto.description,
-          author_UUID: createBookDto.author_UUID,
-          borrow_UUID: createBookDto.borrow_UUID
-        },
+          author: {
+              connect: { author_UUID: createBookDto.author_UUID },
+          },
+          borrow: createBookDto.borrow_UUID ? {
+            connect: {
+              borrow_UUID: createBookDto.borrow_UUID,
+            },
+          } : undefined,
+      },
       }),
     ).toJSON();
   }
@@ -75,8 +81,6 @@ export class BooksService {
         data: {
           name: updateBookDto.name,
           description: updateBookDto.description,
-          author_UUID: updateBookDto.author_UUID,
-          borrow_UUID: updateBookDto.borrow_UUID
         },
       }),
     ).toJSON();

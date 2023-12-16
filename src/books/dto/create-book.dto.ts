@@ -18,15 +18,18 @@ export class CreateBookDto {
   @IsString()
   public description: string;
 
-@ApiProperty({
+  @ApiProperty({
   description: "This field represents the book's author_UUID",
   })
   @IsString()
   public author_UUID: string;
 
-@ApiProperty({
-  description: "This field represents the book's borrow_UUID",
+  @ApiProperty({
+    description: "This field represents the book's borrow_UUID (optional)",
+    required: false,
   })
   @IsString()
-  public borrow_UUID: string;
+  @IsOptional()
+  public borrow_UUID?: string;
+  
 }

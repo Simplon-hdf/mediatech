@@ -30,16 +30,16 @@
 
 ```bash
 # Repo Cloning
-$ git clone https://github.com/AguitInan/aubontroc.git
+$ git clone https://github.com/Simplon-hdf/mediatech.git
 
 # Change Directory
-$ cd aubontroc
+$ cd mediatech
 
 # PNPM Installation
 $ pnpm install
 
 # Créer le fichier .env (placer le fichier à la racine)
-DB_URL="postgresql://username:password@localhost:5432/dbname?schema=public"
+DATABASE_URL="postgresql://username:password@localhost:5432/dbname?schema=public"
 
 # Prisma Migration
 $ npx prisma migrate dev
