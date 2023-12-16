@@ -29,7 +29,27 @@
 ## Installation
 
 ```bash
+# Repo Cloning
+$ git clone https://github.com/AguitInan/aubontroc.git
+
+# Change Directory
+$ cd aubontroc
+
+# PNPM Installation
 $ pnpm install
+
+# Créer le fichier .env (placer le fichier à la racine)
+DB_URL="postgresql://username:password@localhost:5432/dbname?schema=public"
+
+# Prisma Migration
+$ npx prisma migrate dev
+
+# Mise en Production
+$ pnpm run start:prod
+
+# Swagger
+Ouvrir l'adresse suivante dans un navigateur Web : http://localhost:3000/api
+
 ```
 
 ## Running the app

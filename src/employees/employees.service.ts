@@ -3,9 +3,13 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import NormalizedResponse from 'src/utils/normalized-response';
 import { PrismaService } from 'src/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class EmployeesService {
+
+  private saltRounds = 10;
+
   constructor(private prisma: PrismaService) {}
 
   public async getByUUID(uuid: string) {
@@ -30,11 +34,10 @@ public async create(createEmployeeDto: CreateEmployeeDto) {
               },
           },
           mail_address: createEmployeeDto.mail_address,
-          password: createEmployeeDto.password,
+          password: await bcrypt.hash(createEmployeeDto.password, this.saltRounds),
       },
   });
-
-  return new NormalizedResponse(`Employee ${createdEmployee} has been created`, createdEmployee).toJSON();
+  return new NormalizedResponse(`Employee ${createEmployeeDto.first_name + " " +  createEmployeeDto.last_name} has been created`, createdEmployee).toJSON();
 }
 
 public async updateByUUID(uuid: string, updateEmployeeDto: UpdateEmployeeDto) {
@@ -54,7 +57,7 @@ public async updateByUUID(uuid: string, updateEmployeeDto: UpdateEmployeeDto) {
       },
   });
 
-  return new NormalizedResponse(`Employee ${employee} has been updated`, employee).toJSON();
+  return new NormalizedResponse(`Employee ${updateEmployeeDto.first_name + " " +  updateEmployeeDto.last_name} has been updated`, employee).toJSON();
 }
 
   public async deleteByUUID(uuid: string) {

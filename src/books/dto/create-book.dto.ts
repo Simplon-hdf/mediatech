@@ -1,15 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsDateString, IsInt, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsDateString, IsInt, IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class CreateBookDto {
   @ApiProperty({
     description: "This field represents the book's name",
+    minLength: 3,
+    maxLength: 40,
   })
   @IsString()
   public name: string;
 
   @ApiProperty({
     description: "This field represents the book's description",
+    minLength: 1,
+    maxLength: 500,
   })
   @IsString()
   public description: string;

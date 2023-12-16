@@ -7,30 +7,64 @@ import NormalizedResponse from 'src/utils/normalized-response';
 @Injectable()
 export class BorrowsService {
   constructor(private prisma: PrismaService) {}
-
-  public async getByUUID(uuid: string) {
-    const borrowedItem = await this.prisma.borrows.findUnique({
-      where: {
-        borrow_UUID: uuid,
-      },
-    });
-
-    return new NormalizedResponse(`Borrow with UUID ${uuid} found`, borrowedItem).toJSON();
-  }
+  // public async getByUUID(uuid: string) {
+  //   const borrowedItem = await this.prisma.borrows.findUnique({
+  //     where: {
+  //       borrow_UUID: uuid,
+  //     },
+  //   });
+  //   return new NormalizedResponse(`Borrow with UUID ${uuid} found`, borrowedItem).toJSON();
+  // }
 
   public async create(createBorrowDto: CreateBorrowDto) {
-    const createdBorrow = new NormalizedResponse(
-      `Author ${createBorrowDto} has been created`,
-      await this.prisma.borrows.create({
+    const createdBorrow = await this.prisma.borrows.create ({
         data: {
           status: createBorrowDto.status,
           end_at: createBorrowDto.end_at,
           employee_UUID: createBorrowDto.employee_UUID,
           borrower_UUID: createBorrowDto.borrower_UUID,    
         },
+      });
+    return new NormalizedResponse(`Borrow ${createBorrowDto.borrower_UUID } has been created`, createdBorrow).toJSON();
+  }
+
+  public async getByBorrowUUID(uuid: string) {
+    return new NormalizedResponse(
+      `Borrow for '${uuid}' uuid has been found`,
+      await this.prisma.borrows.findUnique({
+        where: {
+          borrow_UUID: uuid,
+        },
       }),
-    );
-    return new NormalizedResponse('Borrow with UUID ${createdBorrow.borrow_UUID} created', createdBorrow).toJSON();
+    ).toJSON();
+  }
+
+  public async getByEmployeeUUID(uuid: string) {
+    return new NormalizedResponse(
+      `Borrow for '${uuid}' uuid has been found`,
+      await this.prisma.employees.findUnique({
+        where: {
+          employee_UUID: uuid,
+        },
+        include: {
+          borrows: true,
+        }
+      }),
+    ).toJSON();
+  }
+
+  public async getByBorrowerUUID(uuid: string) {
+    return new NormalizedResponse(
+      `Borrow for '${uuid}' uuid has been found`,
+      await this.prisma.borrowers.findUnique({
+        where: {
+          borrower_UUID: uuid,
+        },
+        include: {
+          borrows: true,
+        }
+      }),
+    ).toJSON();
   }
 
   public async updateByUUID(uuid: string, updateBorrowDto: UpdateBorrowDto) {
@@ -44,7 +78,7 @@ export class BorrowsService {
         end_at: updateBorrowDto.end_at,
       },
     });
-    return new NormalizedResponse(`Borrow with UUID ${uuid} updated`, updatedBorrow).toJSON();
+    return new NormalizedResponse(`Borrow with UUID ${updateBorrowDto.borrower_UUID} has been updated`, updatedBorrow).toJSON();
   }
 
   public async deleteByUUID(uuid: string) {
@@ -60,7 +94,4 @@ export class BorrowsService {
     return `This action returns all borrows`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} borrow`;
-  }
 }

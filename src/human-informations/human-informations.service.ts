@@ -22,7 +22,7 @@ export class HumanInformationsService {
 
   public async create(createHumanInformationDto: CreateHumanInformationDto) {
     const createdAuthor = new NormalizedResponse(
-      `HumanInformation ${createHumanInformationDto.first_name} has been created`,
+      `HumanInformation ${createHumanInformationDto.first_name + " " + createHumanInformationDto.last_name} has been created`,
       await this.prisma.humanInformations.create({
         data: {
           first_name: createHumanInformationDto.first_name,
@@ -35,7 +35,7 @@ export class HumanInformationsService {
 
   public async updateByUUID(uuid: string, updateHumanInformationDto: UpdateHumanInformationDto) {
     return new NormalizedResponse(
-      `Author ${updateHumanInformationDto.humanInformation_UUID} has been updated`,
+      `HumanInformation ${updateHumanInformationDto.humanInformation_UUID} has been updated`,
       await this.prisma.humanInformations.update({
         where: {
           humanInformation_UUID: uuid,
